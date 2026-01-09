@@ -1,16 +1,13 @@
-/* RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Lexend", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
-html,
 body {
-  background: #000;
+  background: #000000;
   color: #e5e7eb;
-  overflow-x: hidden;
 }
 
 /* NAVBAR */
@@ -20,28 +17,14 @@ body {
   padding: 14px 24px;
   background: rgba(8, 15, 12, 0.9);
   border-radius: 14px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  border: 1px solid rgba(0, 255, 150, 0.25);
+  border: 1px solid rgba(0, 255, 150, 0.2);
   box-shadow: 0 0 20px rgba(0, 255, 150, 0.15);
 }
 
-.logo {
-  font-weight: 600;
-  color: #a7f3d0;
-}
 
-.dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background: #00ff96;
-  border-radius: 50%;
-  margin-right: 6px;
-}
 
 /* NAV LINKS */
 .nav-links {
@@ -54,13 +37,14 @@ body {
   text-decoration: none;
   color: #9ca3af;
   font-size: 0.95rem;
+  transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
   color: #22c55e;
 }
 
-/* BUTTONS */
+/* ACTION BUTTONS */
 .nav-actions {
   display: flex;
   gap: 12px;
@@ -71,126 +55,112 @@ body {
   border-radius: 10px;
   font-size: 0.9rem;
   cursor: pointer;
-  border: none;
+  transition: all 0.3s ease;
 }
 
+/* LOGIN */
 .btn.login {
   background: transparent;
   color: #a7f3d0;
   border: 1px solid rgba(34, 197, 94, 0.5);
 }
 
+.btn.login:hover {
+  background: rgba(34, 197, 94, 0.1);
+}
+
+/* SIGNUP */
 .btn.signup {
   background: linear-gradient(90deg, #22c55e, #16a34a);
   color: #02140b;
+  border: none;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
 }
 
-/* HERO */
-.hero {
-  max-width: 1100px;
-  margin: 60px auto;
-  padding: 0 20px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 50px;
-}
-
-.hero-content {
-  max-width: 520px;
+.btn.signup:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 25px rgba(34, 197, 94, 0.9);
 }
 
 .hero-text {
-  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-family: "Lexend", sans-serif;
+  font-size: 3.5rem;
+  max-width: 500px;
   line-height: 1.3;
+  margin-top: -15%;
 }
 
 .highlight {
   color: #00ff96;
+  font-weight: 600;
 }
 
+
+text {
+  color: #00ff96;
+  font-family: "Lexend";
+  font-weight: 600;
+ 
+}
 .hero-image {
   width: 100%;
-  max-width: 420px;
-  height: auto;
+  max-width: 500px;   /* controls max size */
+  height: auto;       /* keeps aspect ratio */
+
+  object-fit: contain;
 }
 
-/* CTA BUTTON */
+section.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 20px;
+}
 .button {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   padding: 14px 32px;
   border-radius: 12px;
+
   background: linear-gradient(135deg, #00ff96, #22c55e);
   color: #02140b;
+
   font-family: "Lexend", sans-serif;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
+
   /* CHANGED: Removed margin-left: 15% */
   /* ADDED: Margin top to create space between text and button */
-  margin-top: 20px;
-  box-shadow: 0 0 25px rgba(0, 255, 150, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  margin-top: 20px; 
+
+  box-shadow:
+    0 0 25px rgba(0, 255, 150, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
 /* Hover */
 .button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 40px rgba(0, 255, 150, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 0 40px rgba(0, 255, 150, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
 /* Click */
 .button:active {
   transform: scale(0.97);
 }
-
-/* FOOTER */
-.footer {
-  margin-top: 60px;
+footer{
+  margin-top: 50px;
   padding: 20px;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #6b7280;
-}
-
-/* =======================
-   RESPONSIVE
-======================= */
-@media (max-width: 768px) {
-
-  .navbar {
-    flex-direction: column;
-    gap: 14px;
-    text-align: center;
-  }
-
-  .hero {
-    flex-direction: column-reverse;
-    text-align: center;
-  }
-
-  .hero-content {
-    max-width: 100%;
-  }
-
-  .button {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-@media (max-width: 480px) {
-
-  .hero-image {
-    max-width: 280px;
-  }
-
-  .btn {
-    font-size: 0.85rem;
-    padding: 7px 14px;
-  }
 }
