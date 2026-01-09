@@ -164,3 +164,93 @@ footer{
   font-size: 0.9rem;
   color: #6b7280;
 }
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+/* Tablets & small laptops */
+@media (max-width: 1024px) {
+  .hero-text {
+    font-size: 3rem;
+    margin-top: 0;
+  }
+
+  section.hero {
+    gap: 40px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+
+  /* NAVBAR */
+  .navbar {
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-actions {
+    order: 2;
+  }
+
+  /* HERO */
+  section.hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-text {
+    font-size: 2.6rem;
+    max-width: 100%;
+  }
+
+  .hero-image {
+    max-width: 420px;
+  }
+
+  .button {
+    margin: 25px auto 0;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+
+  body {
+    padding: 0 10px;
+  }
+
+  .navbar {
+    padding: 14px;
+  }
+
+  .nav-links {
+    gap: 18px;
+  }
+
+  .hero-text {
+    font-size: 2.1rem;
+    line-height: 1.25;
+  }
+
+  .hero-image {
+    max-width: 300px;
+  }
+
+  .button {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+  }
+
+  footer {
+    font-size: 0.8rem;
+  }
+}
