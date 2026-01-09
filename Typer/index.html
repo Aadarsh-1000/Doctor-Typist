@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WPM Tester</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00FF9D;
+            /* The Neon Green */
+            --bg-color: #050505;
+            /* Deep Black */
+            --text-color: #ffffff;
+            --text-dim: #555555;
+            --error-color: #ff4f4f;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Ambient Glow Background (Optional) */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--primary-color);
+            filter: blur(150px);
+            opacity: 0.1;
+            top: 10%;
+            left: 20%;
+            z-index: -1;
+        }
+
+        /* --- Navbar Style --- */
+        nav {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            padding: 15px 30px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.1);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dot {
+            height: 10px;
+            width: 10px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Main Container --- */
+        .container {
+            width: 800px;
+            padding: 35px;
+            background: var(--glass-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* --- The Typing Text Area --- */
+        .typing-box {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 25px;
+            max-height: 250px;
+            overflow: hidden;
+            text-align: left;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .typing-text p {
+            font-family: 'Roboto Mono', monospace;
+            /* Monospaced for coding feel */
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+
+        /* Character States */
+        .typing-text p span.correct {
+            color: var(--primary-color);
+            text-shadow: 0 0 5px rgba(0, 255, 157, 0.5);
+        }
+
+        .typing-text p span.incorrect {
+            color: var(--error-color);
+            text-decoration: underline;
+        }
+
+        .typing-text p span.active {
+            color: #fff;
+            border-right: 2px solid var(--primary-color);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        /* --- Stats Area --- */
+        .content-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-details {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .stat-item p {
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-item span {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* --- The Button (Matches your image) --- */
+        button {
+            padding: 12px 30px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            background: var(--primary-color);
+            color: #000;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.4);
+        }
+
+        button:hover {
+            background: #fff;
+            box-shadow: 0 0 25px rgba(0, 255, 157, 0.8);
+        }
+
+        /* Hidden Input Field */
+        .input-field {
+            z-index: -999;
+            opacity: 0;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">
+            <span class="dot"></span>
+            Doctor Typist
+        </div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+    
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="wrapper">
+            <input type="text" class="input-field">
+
+            <div class="typing-box">
+                <div class="typing-text">
+                    <p></p>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <div class="result-details">
+                    <div class="stat-item">
+                        <p>Time Left</p>
+                        <span><b class="time">60</b>s</span>
+                    </div>
+                    <div class="stat-item">
+                        <p>Mistakes</p>
+                        <span><span class="mistake">0</span></span>
+                    </div>
+                    <div class="stat-item">
+                        <p>WPM</p>
+                        <span><span class="wpm">0</span></span>
+                    </div>
+                    <div class="stat-item">
+                        <p>CPM</p>
+                        <span><span class="cpm">0</span></span>
+                    </div>
+                </div>
+                <button>Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const paragraphs = [
+            "The future belongs to those who believe in the beauty of their dreams and the power of their code. Technology is best when it brings people together.",
+            "In the neon-lit streets of the digital age, speed is currency. Accuracy is survival. The only way to predict the future is to invent it yourself.",
+            "Artificial intelligence is not a substitute for human intelligence; it is a tool to amplify human creativity and ingenuity.",
+            "Design is not just what it looks like and feels like. Design is how it works. Simplicity is the ultimate sophistication."
+        ];
+
+        const typingText = document.querySelector(".typing-text p"),
+            inpField = document.querySelector(".wrapper .input-field"),
+            tryAgainBtn = document.querySelector(".content-box button"),
+            timeTag = document.querySelector(".time"),
+            mistakeTag = document.querySelector(".mistake"),
+            wpmTag = document.querySelector(".wpm"),
+            cpmTag = document.querySelector(".cpm");
+
+        let timer,
+            maxTime = 60,
+            timeLeft = maxTime,
+            charIndex = isTyping = 0,
+            mistakes = 0;
+
+        // --- AUDIO SYSTEM (Web Audio API) ---
+        // This creates sound without needing external MP3 files
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            if (type === 'click') {
+                // Futuristic "High Tech" Click
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'error') {
+                // Low "Buzz" for errors
+                oscillator.type = 'sawtooth';
+                oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+                oscillator.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.15);
+            }
+        }
+        // ------------------------------------
+
+        function loadParagraph() {
+            const ranIndex = Math.floor(Math.random() * paragraphs.length);
+            typingText.innerHTML = "";
+            paragraphs[ranIndex].split("").forEach(char => {
+                let span = `<span>${char}</span>`;
+                typingText.innerHTML += span;
+            });
+            typingText.querySelectorAll("span")[0].classList.add("active");
+            document.addEventListener("keydown", () => inpField.focus());
+            typingText.addEventListener("click", () => inpField.focus());
+        }
+
+        function initTyping() {
+            let characters = typingText.querySelectorAll("span");
+            let typedChar = inpField.value.split("")[charIndex];
+
+            if (charIndex < characters.length && timeLeft > 0) {
+                if (!isTyping) {
+                    timer = setInterval(initTimer, 1000);
+                    isTyping = true;
+                }
+                if (typedChar == null) { // If backspace
+                    if (charIndex > 0) {
+                        charIndex--;
+                        if (characters[charIndex].classList.contains("incorrect")) {
+                            mistakes--;
+                        }
+                        characters[charIndex].classList.remove("correct", "incorrect");
+                        playSound('click'); // Sound on backspace too
+                    }
+                } else {
+                    if (characters[charIndex].innerText === typedChar) {
+                        characters[charIndex].classList.add("correct");
+                        playSound('click'); // PLAY CLICK SOUND
+                    } else {
+                        mistakes++;
+                        characters[charIndex].classList.add("incorrect");
+                        playSound('error'); // PLAY ERROR SOUND
+                    }
+                    charIndex++;
+                }
+                characters.forEach(span => span.classList.remove("active"));
+                if (characters[charIndex]) characters[charIndex].classList.add("active");
+
+                let wpm = Math.round(((charIndex - mistakes) / 5) / (maxTime - timeLeft) * 60);
+                wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
+
+                wpmTag.innerText = wpm;
+                mistakeTag.innerText = mistakes;
+                cpmTag.innerText = charIndex - mistakes;
+            } else {
+                clearInterval(timer);
+                inpField.value = "";
+            }
+        }
+
+        function initTimer() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                timeTag.innerText = timeLeft;
+                let wpm = Math.round(((charIndex - mistakes) / 5) / (maxTime - timeLeft) * 60);
+                wpmTag.innerText = wpm;
+            } else {
+                clearInterval(timer);
+            }
+        }
+
+        function resetGame() {
+            loadParagraph();
+            clearInterval(timer);
+            timeLeft = maxTime;
+            charIndex = mistakes = isTyping = 0;
+            inpField.value = "";
+            timeTag.innerText = timeLeft;
+            wpmTag.innerText = 0;
+            mistakeTag.innerText = 0;
+            cpmTag.innerText = 0;
+        }
+
+        loadParagraph();
+        inpField.addEventListener("input", initTyping);
+        tryAgainBtn.addEventListener("click", resetGame);
+    </script>
+</body>
+
+</html>
