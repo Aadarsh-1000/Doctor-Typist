@@ -15,7 +15,7 @@ let mistakes = 0;
 
 function loadText() {
   textDisplay.innerHTML = "";
-  testText.split("").forEach(char => {
+  testText.split("").forEach(char => { 
     const span = document.createElement("span");
     span.innerText = char;
     textDisplay.appendChild(span);
