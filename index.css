@@ -6,7 +6,8 @@
   font-family: "Lexend", sans-serif;
 }
 
-html, body {
+html,
+body {
   background: #000;
   color: #e5e7eb;
   overflow-x: hidden;
@@ -117,16 +118,34 @@ html, body {
 
 /* CTA BUTTON */
 .button {
-  margin-top: 22px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 14px 32px;
   border-radius: 12px;
-
   background: linear-gradient(135deg, #00ff96, #22c55e);
   color: #02140b;
-
+  font-family: "Lexend", sans-serif;
+  font-size: 1rem;
   font-weight: 600;
-  border: none;
   cursor: pointer;
+  /* CHANGED: Removed margin-left: 15% */
+  /* ADDED: Margin top to create space between text and button */
+  margin-top: 20px;
+  box-shadow: 0 0 25px rgba(0, 255, 150, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover */
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(0, 255, 150, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+/* Click */
+.button:active {
+  transform: scale(0.97);
 }
 
 /* FOOTER */
